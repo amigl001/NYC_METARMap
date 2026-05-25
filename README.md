@@ -8,6 +8,8 @@ I've created detailed instructions about the setup and parts used here: https://
 
 ## Software Setup
 
+For a gift/appliance-style install with phone-friendly Wi-Fi setup, use the [Dad Setup Guide](DAD_SETUP.md) and [SD Card Flashing Runbook](SD_CARD_FLASHING.md). If the Pi is already unreachable on Wi-Fi, use [Lost Pi Recovery](PI_RECOVERY.md). Before gifting, set the permanent airport/LED layout using the [Board Configuration](BOARD_CONFIG.md) guide. The appliance setup installs systemd services that refresh the map, turn the lights off at night, and create a `METARMap Setup` Wi-Fi network whenever the Raspberry Pi is not connected.
+
 * Install [Raspberry Pi OS Lite](https://www.raspberrypi.org/software/) on SD card
 * [Enable Wi-Fi and SSH](https://medium.com/@danidudas/install-raspbian-jessie-lite-and-setup-wi-fi-without-access-to-command-line-or-using-the-network-97f065af722e)
 * Install SD card and power up Raspberry Pi

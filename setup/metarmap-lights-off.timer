@@ -1,0 +1,11 @@
+[Unit]
+Description=Turn METARMap LEDs off every night
+
+[Timer]
+OnCalendar=*-*-* 22:05:00
+Persistent=true
+Unit=metarmap-lights-off.service
+
+[Install]
+WantedBy=timers.target
+

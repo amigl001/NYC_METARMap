@@ -1,0 +1,9 @@
+[Unit]
+Description=METARMap weather LED refresh
+Wants=network-online.target metarmap-wifi-setup.service
+After=network-online.target metarmap-wifi-setup.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/pi/NYC_METARMap
+ExecStart=/home/pi/NYC_METARMap/refresh.sh

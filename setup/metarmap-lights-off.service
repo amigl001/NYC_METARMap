@@ -1,0 +1,7 @@
+[Unit]
+Description=Turn METARMap LEDs off at night
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/pi/NYC_METARMap
+ExecStart=/home/pi/NYC_METARMap/lightsoff.sh

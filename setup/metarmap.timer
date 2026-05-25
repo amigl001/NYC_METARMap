@@ -1,0 +1,11 @@
+[Unit]
+Description=Refresh METARMap every five minutes
+
+[Timer]
+OnBootSec=90
+OnUnitActiveSec=5min
+Unit=metarmap.service
+
+[Install]
+WantedBy=timers.target
+

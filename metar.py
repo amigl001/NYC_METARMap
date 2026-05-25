@@ -6,6 +6,7 @@ import board
 import neopixel
 import time
 import datetime
+from pathlib import Path
 try:
 	import astral
 except ImportError:
@@ -90,6 +91,7 @@ OFFSET_LEGEND_BY = 0
 # ---------------------------------------------------------------------------
 
 print("Running metar.py at " + datetime.datetime.now().strftime('%d/%m/%Y %H:%M'))
+SCRIPT_DIR = Path(__file__).resolve().parent
 
 # Figure out sunrise/sunset times if astral is being used
 if astral is not None and USE_SUNRISE_SUNSET:
@@ -129,11 +131,11 @@ print("External Display:" + str(ACTIVATE_EXTERNAL_METAR_DISPLAY))
 pixels = neopixel.NeoPixel(LED_PIN, LED_COUNT, brightness = LED_BRIGHTNESS_DIM if (ACTIVATE_DAYTIME_DIMMING and bright == False) else LED_BRIGHTNESS, pixel_order = LED_ORDER, auto_write = False)
 
 # Read the airports file to retrieve list of airports and use as order for LEDs
-with open("/home/pi/airports") as f:
+with open(SCRIPT_DIR / "airports") as f:
 	airports = f.readlines()
 airports = [x.strip() for x in airports]
 try:
-	with open("/home/pi/displayairports") as f2:
+	with open(SCRIPT_DIR / "displayairports") as f2:
 		displayairports = f2.readlines()
 	displayairports = [x.strip() for x in displayairports]
 	print("Using subset airports for LED display")
@@ -300,4 +302,3 @@ while looplimit > 0:
 
 print()
 print("Done")
-
