@@ -94,7 +94,7 @@ print("Running metar.py at " + datetime.datetime.now().strftime('%d/%m/%Y %H:%M'
 SCRIPT_DIR = Path(__file__).resolve().parent
 
 # Figure out sunrise/sunset times if astral is being used
-if astral is not None and USE_SUNRISE_SUNSET:
+if astral is not None and ACTIVATE_DAYTIME_DIMMING and USE_SUNRISE_SUNSET:
 	try:
 		# For older clients running python 3.5 which are using Astral 1.10.1
 		ast = astral.Astral()
@@ -152,7 +152,7 @@ if len(airports) > LED_COUNT:
 
 # Retrieve METAR from aviationweather.gov data server
 # Details about parameters can be found here: https://aviationweather.gov/data/api/#/Dataserver/dataserverMetars
-url = "https://aviationweather.gov/cgi-bin/data/dataserver.php?requestType=retrieve&dataSource=metars&stationString=" + ",".join([item for item in airports if item != "NULL"]) + "&hoursBeforeNow=5&format=xml&mostRecent=true&mostRecentForEachStation=constraint"
+url = "https://aviationweather.gov/api/data/metar?ids=" + ",".join([item for item in airports if item != "NULL"]) + "&hours=5&format=xml&taf=false"
 print(url)
 req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36 Edg/86.0.622.69'})
 content = urllib.request.urlopen(req).read()
