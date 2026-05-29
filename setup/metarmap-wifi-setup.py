@@ -12,6 +12,7 @@ SETUP_SSID = "METARMap Setup"
 SETUP_PASSWORD = "metarmap1"
 SETUP_CONNECTION = "metarmap-setup"
 PORT = 8080
+HOTSPOT_CHANNEL = "6"
 
 
 def run(args, check=False):
@@ -38,13 +39,9 @@ def active_wifi_ssid():
 	return ""
 
 
-def is_on_home_wifi():
-	ssid = active_wifi_ssid()
-	return bool(ssid and ssid != SETUP_SSID)
-
-
 def ensure_setup_hotspot():
-	if is_on_home_wifi():
+	ssid = active_wifi_ssid()
+	if ssid:
 		return
 
 	iface = wifi_interface()
@@ -63,6 +60,11 @@ def ensure_setup_hotspot():
 		"password",
 		SETUP_PASSWORD,
 	], check=True)
+	run(["nmcli", "connection", "modify", SETUP_CONNECTION, "802-11-wireless.band", "bg"])
+	run(["nmcli", "connection", "modify", SETUP_CONNECTION, "802-11-wireless.channel", HOTSPOT_CHANNEL])
+	run(["nmcli", "connection", "modify", SETUP_CONNECTION, "wifi-sec.key-mgmt", "wpa-psk"])
+	run(["nmcli", "connection", "down", SETUP_CONNECTION])
+	run(["nmcli", "connection", "up", SETUP_CONNECTION], check=True)
 
 
 def scan_networks():
@@ -134,7 +136,8 @@ class WifiSetupHandler(BaseHTTPRequestHandler):
 		print("%s - %s" % (self.address_string(), fmt % args))
 
 	def render_page(self, message=""):
-		status = "Connected to " + active_wifi_ssid() if is_on_home_wifi() else "Setup mode is active"
+		ssid = active_wifi_ssid()
+		status = "Connected to " + ssid if ssid and ssid != SETUP_SSID else "Setup mode is active"
 		try:
 			networks = scan_networks()
 			network_options = "\n".join(
