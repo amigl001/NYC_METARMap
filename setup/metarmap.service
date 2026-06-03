@@ -1,7 +1,7 @@
 [Unit]
 Description=METARMap weather LED refresh
-Wants=network-online.target metarmap-wifi-setup.service
-After=network-online.target metarmap-wifi-setup.service
+Wants=network-online.target
+After=network-online.target
 
 [Service]
 Type=oneshot
