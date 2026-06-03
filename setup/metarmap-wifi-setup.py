@@ -12,6 +12,7 @@ SETUP_SSID = "METARMap Setup"
 SETUP_PASSWORD = "metarmap1"
 SETUP_CONNECTION = "metarmap-setup"
 PORT = 8080
+HOTSPOT_CHANNEL = "6"
 
 
 def run(args, check=False):
@@ -48,18 +49,38 @@ def ensure_setup_hotspot():
 	run(["nmcli", "connection", "delete", SETUP_CONNECTION])
 	run([
 		"nmcli",
-		"device",
+		"connection",
+		"add",
+		"type",
 		"wifi",
-		"hotspot",
 		"ifname",
 		iface,
 		"con-name",
 		SETUP_CONNECTION,
 		"ssid",
 		SETUP_SSID,
-		"password",
+	], check=True)
+	run([
+		"nmcli",
+		"connection",
+		"modify",
+		SETUP_CONNECTION,
+		"802-11-wireless.mode",
+		"ap",
+		"802-11-wireless.band",
+		"bg",
+		"802-11-wireless.channel",
+		HOTSPOT_CHANNEL,
+		"ipv4.method",
+		"shared",
+		"ipv6.method",
+		"disabled",
+		"wifi-sec.key-mgmt",
+		"wpa-psk",
+		"wifi-sec.psk",
 		SETUP_PASSWORD,
 	], check=True)
+	run(["nmcli", "connection", "up", SETUP_CONNECTION], check=True)
 
 
 def scan_networks():
