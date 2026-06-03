@@ -10,8 +10,8 @@ This is the recommended path for building the gift Pi from a blank SD card.
 4. SSH in once.
 5. Clone or copy this finalized repo to the Pi.
 6. Run `sudo ./install.sh`.
-7. Test the LEDs, mini display, reboot behavior, and Wi-Fi setup portal.
-8. Give Dad the finished map. He only uses the phone-friendly Wi-Fi setup page if his home network is not already configured.
+7. Test the LEDs, mini display, reboot behavior, and BerryLan Wi-Fi setup.
+8. Give Dad the finished map. He uses BerryLan if his home network is not already configured.
 
 Do not manually install NeoPixel packages, cron jobs, or display libraries first. The installer does that so the build stays repeatable.
 
@@ -104,13 +104,9 @@ After reboot, confirm the map updates on its own.
 
 ## Test Dad's Wi-Fi Setup Flow
 
-To test the recovery path, remove or disconnect the staging Wi-Fi from the Pi and reboot. The Pi should create:
+To test the recovery path, remove or disconnect the staging Wi-Fi from the Pi and reboot. Use the BerryLan app to connect the Pi back to Wi-Fi over Bluetooth.
 
-- Network: `METARMap Setup`
-- Password: `metarmap1`
-- Setup page: `http://10.42.0.1:8080`
-
-From a phone, join that setup network, open the setup page, and connect the Pi back to Wi-Fi.
+After BerryLan reconnects Wi-Fi, SSH back in and confirm the map refresh service runs.
 
 ## Final Handoff
 
@@ -120,5 +116,5 @@ Before giving it to Dad:
 - Confirm `python3 tools/validate_board_config.py` passes.
 - Confirm the LEDs match real airport positions.
 - Confirm the mini display works.
-- Confirm the setup portal appears when Wi-Fi is unavailable.
+- Confirm BerryLan can reconnect the Pi when Wi-Fi is unavailable.
 - Give Dad only the short instructions in `DAD_SETUP.md`.

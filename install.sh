@@ -41,15 +41,14 @@ install -m 0644 "$APP_DIR/setup/metarmap.service" /etc/systemd/system/metarmap.s
 install -m 0644 "$APP_DIR/setup/metarmap.timer" /etc/systemd/system/metarmap.timer
 install -m 0644 "$APP_DIR/setup/metarmap-lights-off.service" /etc/systemd/system/metarmap-lights-off.service
 install -m 0644 "$APP_DIR/setup/metarmap-lights-off.timer" /etc/systemd/system/metarmap-lights-off.timer
-install -m 0644 "$APP_DIR/setup/metarmap-wifi-setup.service" /etc/systemd/system/metarmap-wifi-setup.service
+rm -f /etc/systemd/system/metarmap-wifi-setup.service
 
 systemctl enable --now NetworkManager.service
 systemctl daemon-reload
-systemctl enable --now metarmap-wifi-setup.service
+systemctl disable --now metarmap-wifi-setup.service 2>/dev/null || true
 systemctl enable --now metarmap.timer
 systemctl enable --now metarmap-lights-off.timer
 
 echo
 echo "Done."
-echo "If the Pi is not on Wi-Fi, join 'METARMap Setup' with password 'metarmap1'"
-echo "Then open http://10.42.0.1:8080 and pick the home Wi-Fi network."
+echo "Use BerryLan for Wi-Fi setup, then this app will run automatically."
