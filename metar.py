@@ -181,6 +181,7 @@ for metar in root.iter('METAR'):
 	vis = 0
 	altimHg = 0.0
 	obs = ""
+	obsTime = datetime.datetime.min.replace(tzinfo=datetime.timezone.utc)
 	skyConditions = []
 	if metar.find('wind_gust_kt') is not None:
 		windGustSpeed = int(metar.find('wind_gust_kt').text)
@@ -209,6 +210,8 @@ for metar in root.iter('METAR'):
 	if metar.find('raw_text') is not None:
 		rawText = metar.find('raw_text').text
 		lightning = False if ((rawText.find('LTG', 4) == -1 and rawText.find('TS', 4) == -1) or rawText.find('TSNO', 4) != -1) else True
+	if stationId in conditionDict and obsTime <= conditionDict[stationId]["obsTime"]:
+		continue
 	print(stationId + ":" 
 	+ flightCategory + ":" 
 	+ str(windDir) + "@" + str(windSpeed) + ("G" + str(windGustSpeed) if windGust else "") + ":"
