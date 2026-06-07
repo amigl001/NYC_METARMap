@@ -39,7 +39,7 @@ systemctl status metarmap-lights-off.timer
 The installer enables:
 
 - A METAR refresh every five minutes after boot.
-- A lights-off schedule at 10:05 PM.
+- An overnight lights-off window from midnight until 7:00 AM.
 - I2C support for the mini display.
 
 ## Wi-Fi Recovery

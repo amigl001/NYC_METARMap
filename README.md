@@ -34,7 +34,7 @@ For a gift/appliance-style install with BerryLan phone-friendly Wi-Fi setup, use
   * `chmod +r filename` will grant write permissions
 * To have the script start up automatically and refresh in regular intervals, use crontab and set the appropriate interval. For an example you can refer to the [crontab](crontab) file in the GitHub repo (make sure you grant the file execute permissions beforehand to the refresh.sh and lightsoff.sh file). To edit your crontab type: **`crontab -e`**, after you are done with the edits, exit out by pressing **ctrl+x** and confirm the write operation
   * The sample crontab will run the script every 5 minutes (the */5) between the hours of 7 to 21, which includes the 21 hour, so it means it will run until 21:55
-  * Then at 22:05 it will run the lightsoff.sh script, which will turn all the lights off
+  * Then at midnight it will run the lightsoff.sh script, and refresh.sh will keep the LEDs off until 7:00 AM
 
 ## Additional Wind condition blinking/fading functionality
 
